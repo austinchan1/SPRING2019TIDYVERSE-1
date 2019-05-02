@@ -169,7 +169,7 @@ There are a few topics I did not cover in this vignette that I think would be a 
 
 ##Subsetting methods with tibbles  
 
-Tibble subsetting may be accomplished using methods developed to subset dataframes.   
+Subsetting tibbles is accomplished using methods developed to subset dataframes; `$`, `[[`, or `[` may be used to call columns, rows, or cells.  
 
 `which` may be implemented to subset on specific values:  
 
@@ -203,5 +203,54 @@ Rows and columns may be called by number:
 WSfirstfive_tibble <- women_stem_tibble[1:5,2:7] 
 
 head(WSfirstfive_tibble,5)
+
+```
+
+Tibbles may be subset by detecting a substring with column names:  
+
+
+```{r message=FALSE,warning=FALSE}
+
+library(stringr)
+#subset based on appearance of punctuation in column name using stringr
+WSpunc_tibble<-women_stem_tibble[str_detect(names(women_stem_tibble), "[[:punct:]]")]
+
+head(WSpunc_tibble,5)
+
+```
+Other options that may be used for subsetting:  
+
+```{r message=TRUE,warning=TRUE}
+
+
+# Subsetting single columns:
+women_stem_tibble[, "Major_code"]
+
+women_stem_tibble[, "Major_code", drop = TRUE]
+
+
+# Subset single rows with the drop:
+women_stem_tibble[1, , drop = TRUE]
+
+as.list(women_stem_tibble[1, ])
+
+women_stem_tibble$Major_category
+
+
+#Other options:
+women_stem_tibble[1, ]
+
+women_stem_tibble[1, c("Major", "Major_code")]
+
+women_stem_tibble[, c("Major", "Major_code")]
+
+women_stem_tibble[c("Major", "Major_code")]
+
+women_stem_tibble["Major_code"]
+
+women_stem_tibble$major
+
+women_stem_tibble[["Major_code"]]
+
 
 ```
